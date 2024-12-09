@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from '@/modules/landing/pages/HomePage.vue';
 import NotFound404 from '@/modules/common/pages/NotFound404.vue';
+import isAutheticatedGuard from '@/modules/auth/guards/is-authenticated.guard';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -35,7 +36,14 @@ const router = createRouter({
           path: '/pokemon/:id',
           name: 'pokemon',
           // props: true,
-          // beforeEnter
+          beforeEnter:[
+            isAutheticatedGuard
+            // (to, from, next) => {
+            //   console.log('temporal');
+            //   console.log({to,from, next});
+            //   return next();
+            // }
+          ],
           props: (route) =>{
             // console.log({route});
             const id = Number(route.params.id);
